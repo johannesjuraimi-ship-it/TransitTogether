@@ -45,3 +45,4 @@ npm install
 
 
 https://youtu.be/xWcSAlunDzE
+https://chat.deepseek.com/share/akbamq10j53yfytr8f
