@@ -1,4 +1,4 @@
-# TransitTogether — Smart Commuter Companion
+# Nudge — Smart Commuter Companion
 
 A mobile-first web app for Problem Statement 2 (Smart Commuter Companion).
 
