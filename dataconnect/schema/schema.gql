@@ -1,0 +1,35 @@
+type User @table {
+  email: String!
+  displayName: String!
+  phoneNumber: String
+  avatarUrl: String
+}
+
+type Trip @table {
+  title: String!
+  startTime: Timestamp!
+  destinationCoordinates: Vector @col(size: 2)
+  status: String
+  creator: User!
+}
+
+type TripParticipant @table(key: ["trip", "user"]) {
+  trip: Trip!
+  user: User!
+  role: String
+}
+
+type Route @table {
+  name: String!
+  transitMode: String!
+  scheduleDetails: String
+  lastAlertTime: Timestamp
+  user: User!
+}
+
+type TransitAlert @table {
+  message: String!
+  severityLevel: String!
+  timestamp: Timestamp
+  route: Route
+}

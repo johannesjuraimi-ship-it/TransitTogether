@@ -1,6 +1,16 @@
-// src/components/MapView.web.tsx
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css'; // <-- crucial for map styling
 import { MapContainer, Marker, Polyline, Popup, TileLayer } from 'react-leaflet';
+
+const defaultMarkerIcon = L.icon({
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
 
 export interface MapMarker {
   id: string;
@@ -47,7 +57,7 @@ export default function AppMapView({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {markers.map((m) => (
-          <Marker key={m.id} position={[m.latitude, m.longitude]}>
+          <Marker key={m.id} position={[m.latitude, m.longitude]} icon={defaultMarkerIcon}>
             {(m.title || m.description) && (
               <Popup>
                 <strong>{m.title}</strong>

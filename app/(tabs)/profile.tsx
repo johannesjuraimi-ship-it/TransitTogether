@@ -88,7 +88,13 @@ export default function ProfileScreen() {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.logoutButton} onPress={signOut}>
+      <TouchableOpacity
+        style={styles.logoutButton}
+        onPress={() => {
+          signOut();
+          router.replace('/(auth)/login' as any);
+        }}
+      >
         <Text style={styles.logoutText}>Sign Out</Text>
       </TouchableOpacity>
     </View>

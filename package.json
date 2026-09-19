@@ -3,6 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "dependencies": {
+    "@dataconnect/generated": "file:src/dataconnect-generated",
     "@expo/metro-runtime": "~57.0.15",
     "@expo/ui": "~57.0.18",
     "@tanstack/react-query": "^5.103.1",

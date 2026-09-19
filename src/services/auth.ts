@@ -27,11 +27,20 @@ async function getUserInfo(accessToken: string): Promise<UserInfo> {
   };
 }
 
-// --- Secure token storage ---
+import { Platform } from 'react-native';
+
+// --- Secure token storage with web fallback ---
 const TOKEN_KEY = 'google_access_token';
 const REFRESH_KEY = 'google_refresh_token';
 
 export async function saveTokens(accessToken: string, refreshToken?: string) {
+  if (Platform.OS === 'web') {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(TOKEN_KEY, accessToken);
+      if (refreshToken) localStorage.setItem(REFRESH_KEY, refreshToken);
+    }
+    return;
+  }
   await SecureStore.setItemAsync(TOKEN_KEY, accessToken);
   if (refreshToken) {
     await SecureStore.setItemAsync(REFRESH_KEY, refreshToken);
@@ -39,12 +48,28 @@ export async function saveTokens(accessToken: string, refreshToken?: string) {
 }
 
 export async function getStoredTokens(): Promise<{ accessToken: string | null; refreshToken: string | null }> {
+  if (Platform.OS === 'web') {
+    if (typeof localStorage !== 'undefined') {
+      return {
+        accessToken: localStorage.getItem(TOKEN_KEY),
+        refreshToken: localStorage.getItem(REFRESH_KEY),
+      };
+    }
+    return { accessToken: null, refreshToken: null };
+  }
   const accessToken = await SecureStore.getItemAsync(TOKEN_KEY);
   const refreshToken = await SecureStore.getItemAsync(REFRESH_KEY);
   return { accessToken, refreshToken };
 }
 
 export async function clearTokens() {
+  if (Platform.OS === 'web') {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(REFRESH_KEY);
+    }
+    return;
+  }
   await SecureStore.deleteItemAsync(TOKEN_KEY);
   await SecureStore.deleteItemAsync(REFRESH_KEY);
 }

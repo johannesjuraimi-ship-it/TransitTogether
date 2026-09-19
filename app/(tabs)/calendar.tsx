@@ -1,10 +1,10 @@
-// app/(tabs)/calendar.tsx
 import * as Notifications from 'expo-notifications'; // for foreground handler (native)
 import { useEffect, useState } from 'react';
 import {
     ActivityIndicator,
     Alert,
     FlatList,
+    Platform,
     StyleSheet,
     Text,
     TouchableOpacity,
@@ -15,16 +15,18 @@ import { CalendarEvent } from '../../src/services/calendar';
 import { useAuthStore } from '../../src/stores/authStore';
 import { requestNotificationPermission, scheduleLeaveReminder } from '../../src/utils/scheduleReminder';
 
-// Set up a notification handler so that scheduled notifications appear even when the app is open.
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldShowBanner: true,
-    shouldShowList: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
+// Set up a notification handler so that scheduled notifications appear even when the app is open (native only).
+if (Platform.OS !== 'web') {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldShowBanner: true,
+      shouldShowList: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+    }),
+  });
+}
 
 export default function CalendarScreen() {
   const accessToken = useAuthStore((s) => s.accessToken);

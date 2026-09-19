@@ -27,11 +27,42 @@ export const RACHEL_DEFAULT: Commute = {
   arriveByMinute: 45,
 };
 
+// In-memory fallback for local dev
+const localCommuteStore = new Map<string, Commute>();
+
 export async function saveCommute(userId: string, commute: Commute): Promise<void> {
-  await setDoc(doc(db, 'users', userId, 'profile', 'commute'), commute);
+  localCommuteStore.set(userId, commute);
+  if (typeof localStorage !== 'undefined') {
+    try {
+      localStorage.setItem(`commute_${userId}`, JSON.stringify(commute));
+    } catch {}
+  }
+
+  try {
+    await setDoc(doc(db, 'users', userId, 'profile', 'commute'), commute);
+  } catch (err) {
+    console.warn('Firestore saveCommute unavailable, saved locally:', err);
+  }
 }
 
 export async function getCommute(userId: string): Promise<Commute | null> {
-  const snap = await getDoc(doc(db, 'users', userId, 'profile', 'commute'));
-  return snap.exists() ? (snap.data() as Commute) : null;
+  try {
+    const snap = await getDoc(doc(db, 'users', userId, 'profile', 'commute'));
+    if (snap.exists()) {
+      return snap.data() as Commute;
+    }
+  } catch (err) {
+    console.warn('Firestore getCommute unavailable, using local commute:', err);
+  }
+
+  if (localCommuteStore.has(userId)) {
+    return localCommuteStore.get(userId)!;
+  }
+  if (typeof localStorage !== 'undefined') {
+    try {
+      const stored = localStorage.getItem(`commute_${userId}`);
+      if (stored) return JSON.parse(stored);
+    } catch {}
+  }
+  return null;
 }
