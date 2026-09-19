@@ -42,3 +42,6 @@ A mobile-first web app for Problem Statement 2 (Smart Commuter Companion).
 git clone <your-repo-url>
 cd TransitTogether
 npm install
+
+
+https://youtu.be/xWcSAlunDzE
