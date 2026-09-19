@@ -1,10 +1,10 @@
 // src/services/auth.ts
-import * as React from 'react';
-import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
 import { makeRedirectUri } from 'expo-auth-session';
+import * as Google from 'expo-auth-session/providers/google';
+import * as SecureStore from 'expo-secure-store'; // <-- NEW
+import * as WebBrowser from 'expo-web-browser';
+import * as React from 'react';
 
-// Required for the auth flow to finish
 WebBrowser.maybeCompleteAuthSession();
 
 interface UserInfo {
@@ -14,7 +14,6 @@ interface UserInfo {
   photoUrl?: string;
 }
 
-// Exchange the access token for user profile using Google's userinfo endpoint
 async function getUserInfo(accessToken: string): Promise<UserInfo> {
   const response = await fetch('https://www.googleapis.com/userinfo/v2/me', {
     headers: { Authorization: `Bearer ${accessToken}` },
@@ -28,21 +27,38 @@ async function getUserInfo(accessToken: string): Promise<UserInfo> {
   };
 }
 
+// --- Secure token storage ---
+const TOKEN_KEY = 'google_access_token';
+const REFRESH_KEY = 'google_refresh_token';
+
+export async function saveTokens(accessToken: string, refreshToken?: string) {
+  await SecureStore.setItemAsync(TOKEN_KEY, accessToken);
+  if (refreshToken) {
+    await SecureStore.setItemAsync(REFRESH_KEY, refreshToken);
+  }
+}
+
+export async function getStoredTokens(): Promise<{ accessToken: string | null; refreshToken: string | null }> {
+  const accessToken = await SecureStore.getItemAsync(TOKEN_KEY);
+  const refreshToken = await SecureStore.getItemAsync(REFRESH_KEY);
+  return { accessToken, refreshToken };
+}
+
+export async function clearTokens() {
+  await SecureStore.deleteItemAsync(TOKEN_KEY);
+  await SecureStore.deleteItemAsync(REFRESH_KEY);
+}
+// ----------------------------------
+
 export function useGoogleAuth() {
   const [user, setUser] = React.useState<UserInfo | null>(null);
+  const [accessToken, setAccessToken] = React.useState<string | null>(null); // NEW
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
-  // Determine which client ID to use based on platform
-  // Expo Go uses the "web" client ID because it runs inside a webview.
-  // For standalone apps you'd use the iOS/Android client IDs, but for simplicity
-  // during development we'll default to the web client ID, which also works on native in Expo Go.
-  const clientId =
-    process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID ??
-    process.env.EXPO_PUBLIC_GOOGLE_CLIENT_ID; // fallback
-
+  const clientId = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID!;
   const redirectUri = makeRedirectUri({
-    scheme: 'transittogether', // must match the scheme in app.json
+    scheme: 'transittogether',
     path: 'oauthredirect',
   });
 
@@ -55,17 +71,17 @@ export function useGoogleAuth() {
       'https://www.googleapis.com/auth/calendar.events',
     ],
     redirectUri,
-    // For web: use 'id_token' response type to get a JWT with user info.
-    // For native with Expo Go, we'll get an access token; we'll fetch user info separately.
-    // We'll keep it consistent: always request access token and then fetch profile.
   });
 
-  // Watch the auth response
   React.useEffect(() => {
     if (response?.type === 'success') {
       const { authentication } = response;
       if (authentication?.accessToken) {
         setIsLoading(true);
+        // Save tokens
+        saveTokens(authentication.accessToken, authentication.refreshToken).catch(console.error);
+        setAccessToken(authentication.accessToken);
+
         getUserInfo(authentication.accessToken)
           .then((userInfo) => {
             setUser(userInfo);
@@ -82,21 +98,13 @@ export function useGoogleAuth() {
     }
   }, [response]);
 
-  const signIn = () => {
-    promptAsync();
-  };
+  const signIn = () => promptAsync();
 
-  const signOut = () => {
+  const signOut = async () => {
     setUser(null);
-    // Optionally revoke token or clear stored session, but for now we just clear state
+    setAccessToken(null);
+    await clearTokens();
   };
 
-  return {
-    user,
-    isLoading,
-    error,
-    signIn,
-    signOut,
-    request, // in case you need to check if request is ready
-  };
+  return { user, accessToken, isLoading, error, signIn, signOut, request };
 }

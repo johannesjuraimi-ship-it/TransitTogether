@@ -1,0 +1,120 @@
+[debug] [2026-09-19T06:12:47.104Z] ----------------------------------------------------------------------
+[debug] [2026-09-19T06:12:47.106Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Johannes\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2026-09-19T06:12:47.106Z] CLI Version:   15.30.2
+[debug] [2026-09-19T06:12:47.106Z] Platform:      win32
+[debug] [2026-09-19T06:12:47.106Z] Node Version:  v24.18.1
+[debug] [2026-09-19T06:12:47.106Z] Detected Agent: unknown
+[debug] [2026-09-19T06:12:47.106Z] Time:          Sat Sep 19 2026 14:12:47 GMT+0800 (Singapore Standard Time)
+[debug] [2026-09-19T06:12:47.106Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Johannes\TransitTogether
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] 
+[debug] [2026-09-19T06:12:52.049Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-09-19T06:12:52.049Z] > authorizing via signed-in user (student-04-407422801e58@qwiklabs.net)
+[debug] [2026-09-19T06:12:52.064Z] Checked if tokens are valid: true, expires at: 1789801067830
+[debug] [2026-09-19T06:12:52.064Z] Checked if tokens are valid: true, expires at: 1789801067830
+[debug] [2026-09-19T06:12:52.065Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources [none]
+[debug] [2026-09-19T06:12:52.770Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources 403
+[debug] [2026-09-19T06:12:52.771Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2026-09-19T06:12:52.772Z] Request to https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources had HTTP Error: 403, The caller does not have permission
+[debug] [2026-09-19T06:12:52.861Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources had HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\Johannes\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:53:12)
+    at RetryOperation._fn (C:\Users\Johannes\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:415:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[error] 
+[error] Error: Failed to get Firebase project qwiklabs-resources. Please make sure the project exists and your account has permission to access it.
+[debug] [2026-09-19T06:13:09.567Z] ----------------------------------------------------------------------
+[debug] [2026-09-19T06:13:09.570Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Johannes\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2026-09-19T06:13:09.570Z] CLI Version:   15.30.2
+[debug] [2026-09-19T06:13:09.570Z] Platform:      win32
+[debug] [2026-09-19T06:13:09.570Z] Node Version:  v24.18.1
+[debug] [2026-09-19T06:13:09.571Z] Detected Agent: unknown
+[debug] [2026-09-19T06:13:09.571Z] Time:          Sat Sep 19 2026 14:13:09 GMT+0800 (Singapore Standard Time)
+[debug] [2026-09-19T06:13:09.571Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Johannes\TransitTogether
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] 
+[debug] [2026-09-19T06:13:14.789Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-09-19T06:13:14.790Z] > authorizing via signed-in user (student-04-407422801e58@qwiklabs.net)
+[debug] [2026-09-19T06:13:14.804Z] Checked if tokens are valid: true, expires at: 1789801067830
+[debug] [2026-09-19T06:13:14.804Z] Checked if tokens are valid: true, expires at: 1789801067830
+[debug] [2026-09-19T06:13:14.807Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources [none]
+[debug] [2026-09-19T06:13:15.552Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources 403
+[debug] [2026-09-19T06:13:15.552Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2026-09-19T06:13:15.553Z] Request to https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources had HTTP Error: 403, The caller does not have permission
+[debug] [2026-09-19T06:13:15.635Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources had HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\Johannes\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:53:12)
+    at RetryOperation._fn (C:\Users\Johannes\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:415:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[error] 
+[error] Error: Failed to get Firebase project qwiklabs-resources. Please make sure the project exists and your account has permission to access it.
+[debug] [2026-09-19T06:13:59.299Z] ----------------------------------------------------------------------
+[debug] [2026-09-19T06:13:59.302Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Johannes\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2026-09-19T06:13:59.303Z] CLI Version:   15.30.2
+[debug] [2026-09-19T06:13:59.303Z] Platform:      win32
+[debug] [2026-09-19T06:13:59.303Z] Node Version:  v24.18.1
+[debug] [2026-09-19T06:13:59.303Z] Detected Agent: unknown
+[debug] [2026-09-19T06:13:59.303Z] Time:          Sat Sep 19 2026 14:13:59 GMT+0800 (Singapore Standard Time)
+[debug] [2026-09-19T06:13:59.303Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Johannes\TransitTogether
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] 
+[debug] [2026-09-19T06:14:37.650Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-09-19T06:14:37.650Z] > authorizing via signed-in user (student-04-407422801e58@qwiklabs.net)
+[debug] [2026-09-19T06:14:37.664Z] Checked if tokens are valid: true, expires at: 1789801067830
+[debug] [2026-09-19T06:14:37.665Z] Checked if tokens are valid: true, expires at: 1789801067830
+[debug] [2026-09-19T06:14:37.666Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources [none]
+[debug] [2026-09-19T06:14:38.078Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources 403
+[debug] [2026-09-19T06:14:38.078Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2026-09-19T06:14:38.078Z] Request to https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources had HTTP Error: 403, The caller does not have permission
+[debug] [2026-09-19T06:14:38.182Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/qwiklabs-resources had HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\Johannes\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:53:12)
+    at RetryOperation._fn (C:\Users\Johannes\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:415:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+[error] 
+[error] Error: Failed to get Firebase project qwiklabs-resources. Please make sure the project exists and your account has permission to access it.

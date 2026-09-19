@@ -1,30 +1,37 @@
 // app/_layout.tsx
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Stack } from 'expo-router';
 import { useEffect } from 'react';
-import { useAuthStore } from '../src/stores/authStore';
+import { ActivityIndicator, View } from 'react-native';
 import { useGoogleAuth } from '../src/services/auth';
-import { View, ActivityIndicator } from 'react-native';
+import { upsertUser } from '../src/services/user';
+import { useAuthStore } from '../src/stores/authStore';
+
+const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const { user, isLoading } = useAuthStore();
   const { user: googleUser, isLoading: googleLoading, error } = useGoogleAuth();
 
-  // Sync Google auth hook result to Zustand store
+  // Sync Google auth result into Zustand
   useEffect(() => {
     if (googleUser) {
       useAuthStore.getState().setUser(googleUser);
     }
   }, [googleUser]);
 
-  // Update loading/error states
   useEffect(() => {
     useAuthStore.getState().setLoading(googleLoading);
-    if (error) {
-      useAuthStore.getState().setError(error);
-    }
+    if (error) useAuthStore.getState().setError(error);
   }, [googleLoading, error]);
 
-  // While we check auth state, show a splash/loading
+  // Whenever user changes, upsert into Firestore
+  useEffect(() => {
+    if (user) {
+      upsertUser(user).catch(console.error);
+    }
+  }, [user]);
+
   if (isLoading || googleLoading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -34,14 +41,15 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      {user ? (
-        // Authenticated user sees the main tab navigator
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      ) : (
-        // Not authenticated – show login
-        <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
-      )}
-    </Stack>
+    <QueryClientProvider client={queryClient}>
+      <Stack screenOptions={{ headerShown: false }}>
+        {user ? (
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        ) : (
+          <Stack.Screen name="(auth)/login" options={{ headerShown: false }} />
+        )}
+        <Stack.Screen name="commute-setup" options={{ headerShown: true, title: 'Set up commute' }} />
+      </Stack>
+    </QueryClientProvider>
   );
 }
