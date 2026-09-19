@@ -44,5 +44,4 @@ cd TransitTogether
 npm install
 
 
-https://youtu.be/xWcSAlunDzE
-https://chat.deepseek.com/share/akbamq10j53yfytr8f
+https://deepseekhtml2026091925a050.vercel.app/
